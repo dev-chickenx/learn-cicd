@@ -1,0 +1,17 @@
+name: Test env vs context
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DANGEROUS: 'foo "bar" baz'
+
+    steps:
+      - name: "BAD: context directly in run"
+        run: echo "ctx = ${{ env.DANGEROUS }}"
+
+      - name: "GOOD: shell variable with quotes"
+        run: |
+          echo "shell = $DANGEROUS"
