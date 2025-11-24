@@ -10,8 +10,11 @@ jobs:
 
     steps:
       - name: "BAD: context directly in run"
-        run: echo "ctx = ${{ env.DANGEROUS }}"
+        run: |
+          set -x
+          echo "${{ env.DANGEROUS }}"   # ← これがあなたの言っていたテスト内容
 
       - name: "GOOD: shell variable with quotes"
         run: |
-          echo "shell = $DANGEROUS"
+          set -x
+          echo "${DANGEROUS}"           # ← これがあなたの言っていた安全な書き方
